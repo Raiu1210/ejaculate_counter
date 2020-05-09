@@ -43,6 +43,7 @@
 
     <v-content>
       <Signin v-if="!this.$store.state.login"></Signin>
+      <Top v-else></Top>
     </v-content>
 
     <v-footer dark app>
@@ -53,25 +54,27 @@
 
 <script>
 import firebase from 'firebase'
+import Top from '@/components/Top.vue'
 import Signin from '@/components/Signin.vue'
 
 export default {
   data() {
     return {
-        drawer: false,
-        supports:[
-          'Consulting and suppourt',
-          'Discord community',
-          'Report a bug',
-          'Github issue board',
-          'Stack overview'
-        ],
-        isLogin: false,
-        loginUser: null
+      drawer: false,
+      supports:[
+        'Consulting and suppourt',
+        'Discord community',
+        'Report a bug',
+        'Github issue board',
+        'Stack overview'
+      ],
+      isLogin: false,
+      loginUser: null
     }
   },
   components: {
-    Signin
+    Signin,
+    Top
   },
   mounted() {
     firebase.auth().onAuthStateChanged(user => {

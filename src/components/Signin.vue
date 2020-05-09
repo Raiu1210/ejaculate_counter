@@ -31,8 +31,8 @@
           signInOptions: [
             firebase.auth.TwitterAuthProvider.PROVIDER_ID,
           ],
-          // tosUrl: 'https://day-journal.com/memo',
-          // privacyPolicyUrl: 'https://day-journal.com/memo'
+          // tosUrl: 'https://github.com/Raiu1210/ejaculate_counter',
+          privacyPolicyUrl: 'https://github.com/Raiu1210/ejaculate_counter'
       };
       const ui = new firebaseui.auth.AuthUI(firebase.auth());
       ui.start('#firebaseui-auth-container', uiConfig);
