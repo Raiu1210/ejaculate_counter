@@ -17,10 +17,7 @@
 
       }
     },
-    mounted() {
-      // useEffect(() => {
-
-      // })
+    created() {
       const uiConfig = {
         callbacks: {
           signInSuccessWithAuthResult: function(authResult) {
@@ -29,13 +26,13 @@
             }
           }
         },
-          signInFlow: 'redirect',
-          signInSuccessUrl: '/',
-          signInOptions: [
-            firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-          ],
-          tosUrl: 'https://github.com/Raiu1210/ejaculate_counter',
-          privacyPolicyUrl: 'https://github.com/Raiu1210/ejaculate_counter'
+        signInFlow: 'redirect',
+        signInSuccessUrl: '/',
+        signInOptions: [
+          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        ],
+        tosUrl: 'https://github.com/Raiu1210/ejaculate_counter',
+        privacyPolicyUrl: 'https://github.com/Raiu1210/ejaculate_counter'
       };
       const ui = new firebaseui.auth.AuthUI(firebase.auth());
       ui.start('#firebaseui-auth-container', uiConfig);

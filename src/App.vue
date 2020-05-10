@@ -44,7 +44,6 @@
     <v-content>
       <Signin v-show="!this.$store.state.login"></Signin>
       <Top v-show="this.$store.state.login"></Top>
-      <button type="button" @click="doLogout">ログアウト</button>
     </v-content>
 
     <v-footer dark app>
@@ -55,7 +54,7 @@
 
 <script>
 import firebase from 'firebase'
-import Top from '@/components/Top.vue'
+import Top from '@/views/TopView.vue'
 import Signin from '@/components/Signin.vue'
 
 export default {
@@ -89,6 +88,17 @@ export default {
         this.$store.state.login = true;
         this.$store.state.user = user;
         console.log(this.$store.state.user)
+        var db = firebase.firestore();
+        db.collection("users").doc(this.$store.state.user.uid).set({
+          uid: this.$store.state.user.uid,
+          displayName: this.$store.state.user.displayName
+        })
+        .then(function() {
+          console.log("Added")
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
       }
     });
   }
