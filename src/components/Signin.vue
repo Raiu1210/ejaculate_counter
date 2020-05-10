@@ -18,6 +18,9 @@
       }
     },
     mounted() {
+      // useEffect(() => {
+
+      // })
       const uiConfig = {
         callbacks: {
           signInSuccessWithAuthResult: function(authResult) {
@@ -26,12 +29,12 @@
             }
           }
         },
-          signInFlow: 'popup',
+          signInFlow: 'redirect',
           signInSuccessUrl: '/',
           signInOptions: [
             firebase.auth.TwitterAuthProvider.PROVIDER_ID,
           ],
-          // tosUrl: 'https://github.com/Raiu1210/ejaculate_counter',
+          tosUrl: 'https://github.com/Raiu1210/ejaculate_counter',
           privacyPolicyUrl: 'https://github.com/Raiu1210/ejaculate_counter'
       };
       const ui = new firebaseui.auth.AuthUI(firebase.auth());

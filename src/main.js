@@ -22,9 +22,10 @@ firebase.initializeApp(firebaseConfig);
 
 
 const store = new Vuex.Store({
+  strict: false,
   state: {
     login: false,
-    user: ''
+    user: null
   }
 })
 

@@ -42,8 +42,9 @@
     </v-navigation-drawer>
 
     <v-content>
-      <Signin v-if="!this.$store.state.login"></Signin>
-      <Top v-else></Top>
+      <Signin v-show="!this.$store.state.login"></Signin>
+      <Top v-show="this.$store.state.login"></Top>
+      <button type="button" @click="doLogout">ログアウト</button>
     </v-content>
 
     <v-footer dark app>
@@ -76,11 +77,19 @@ export default {
     Signin,
     Top
   },
-  mounted() {
+  methods: {
+    doLogout() {
+      firebase.auth().signOut()
+      this.$store.state.login = false
+    },
+  },
+  created() {
     firebase.auth().onAuthStateChanged(user => {
-      this.$store.state.login = true;
-      this.$store.state.user = user;
-      console.log(this.$store.state.user)
+      if(user) {
+        this.$store.state.login = true;
+        this.$store.state.user = user;
+        console.log(this.$store.state.user)
+      }
     });
   }
 }
