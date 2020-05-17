@@ -85,10 +85,10 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        this.$store.state.login = true;
-        this.$store.state.user = user;
-        console.log(this.$store.state.user)
-        var db = firebase.firestore();
+        this.$store.state.login = true
+        this.$store.state.user = user
+        
+        var db = firebase.firestore()
         db.collection("users").doc(this.$store.state.user.uid).set({
           uid: this.$store.state.user.uid,
           displayName: this.$store.state.user.displayName
