@@ -32,8 +32,12 @@
       <v-container>
         <v-list-item>
           <v-list-item-content>
+            
             <v-list-item-title class="title">
-              Navigation lists
+              <router-link to="/" exact>Home</router-link>
+            </v-list-item-title>
+            <v-list-item-title class="title">
+              <router-link to="/stats">stats</router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -42,8 +46,9 @@
     </v-navigation-drawer>
 
     <v-content>
-      <Signin v-show="!this.$store.state.login"></Signin>
-      <Top v-show="this.$store.state.login"></Top>
+      <router-view/>
+      <!-- <Signin v-show="!this.$store.state.login"></Signin>
+      <Top v-show="this.$store.state.login"></Top> -->
     </v-content>
 
     <v-footer dark app>
@@ -54,8 +59,6 @@
 
 <script>
 import firebase from 'firebase'
-import Top from '@/views/TopView.vue'
-import Signin from '@/components/Signin.vue'
 
 export default {
   data() {
@@ -73,8 +76,6 @@ export default {
     }
   },
   components: {
-    Signin,
-    Top
   },
   methods: {
     doLogout() {
