@@ -8,10 +8,9 @@
       </div>
 
       <br>
-      <img :src="this.$store.state.user.photoURL">
-      <h3>displayName : {{this.$store.state.user.displayName}}</h3>
-      <h3>uid : {{this.$store.state.user.uid}}</h3>
-      <v-btn @click="doLogout" text outlined>ログアウト</v-btn>
+      <img :src="this.user.photoURL">
+      <h3>displayName : {{this.user.displayName}}</h3>
+      <h3>uid : {{this.user.uid}}</h3>
     </center>
   </div>  
 </template>
@@ -21,22 +20,23 @@
 import firebase from 'firebase'
 
 export default {
+  data() {
+    return {
+      user: null,
+      login: false
+    }
+  },
   methods: {
-    doLogout() {
-      firebase.auth().signOut()
-      this.$store.state.login = false
-    },
     save_evaculate() {
       const result = confirm("射精を記録しますか？")
-      if (result) {
-        const uid = this.$store.state.user.uid
+      if (result && this.login) {
         const now = this.get_current_time()
         console.log(now)
         var db = firebase.firestore()
 
-        db.collection(uid).doc(now).set({
-          uid: this.$store.state.user.uid,
-          displayName: this.$store.state.user.displayName
+        db.collection(this.uid).doc(now).set({
+          uid: this.user.uid,
+          displayName: this.user.displayName
         })
         .then(function() {
           alert("射精の記録を追加したよ！")
@@ -60,6 +60,26 @@ export default {
       return year + '-' + month + '-' + day + '-' + hour + '-' + min + '-' + sec
     }
   },
+  created() {
+    console.log(this.$parent.user)
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.user = user
+        
+        var db = firebase.firestore()
+        db.collection("users").doc(this.user.uid).set({
+          uid: this.user.uid,
+          displayName: this.user.displayName
+        })
+        .then(function() {
+          // console.log("Added")
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+      }
+    });
+  }
 }
 </script>
 

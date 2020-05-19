@@ -20,7 +20,10 @@
             <v-list-item v-for="support in supports" :key="support">
               <v-list-item-content>
                 <v-list-item-title>{{ support }}</v-list-item-title>
-              </v-list-item-content>
+              </v-list-item-content>   
+            </v-list-item>
+            <v-list-item>
+              <v-btn @click="doLogout" text outlined>ログアウト</v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -46,9 +49,7 @@
     </v-navigation-drawer>
 
     <v-content>
-      <router-view/>
-      <!-- <Signin v-show="!this.$store.state.login"></Signin>
-      <Top v-show="this.$store.state.login"></Top> -->
+      <router-view v-bind:login="login"/>
     </v-content>
 
     <v-footer dark app>
@@ -71,31 +72,31 @@ export default {
         'Github issue board',
         'Stack overview'
       ],
-      isLogin: false,
-      loginUser: null
+      user: null,
+      login: false
     }
   },
   components: {
   },
   methods: {
     doLogout() {
+      console.log("Logout")
       firebase.auth().signOut()
-      this.$store.state.login = false
+      this.login = false
     },
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        this.$store.state.login = true
-        this.$store.state.user = user
+        this.user = user
         
         var db = firebase.firestore()
-        db.collection("users").doc(this.$store.state.user.uid).set({
-          uid: this.$store.state.user.uid,
-          displayName: this.$store.state.user.displayName
+        db.collection("users").doc(this.user.uid).set({
+          uid: this.user.uid,
+          displayName: this.user.displayName
         })
         .then(function() {
-          console.log("Added")
+          // console.log("Added")
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);

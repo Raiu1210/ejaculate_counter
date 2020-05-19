@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 import router from './router'
 import firebase from 'firebase'
 import vuetify from './plugins/vuetify';
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 Vue.config.productionTip = false
 
 const firebaseConfig = {
@@ -19,19 +19,20 @@ const firebaseConfig = {
   measurementId: "G-JZNSX6FKB9"
 };
 firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 
 
-const store = new Vuex.Store({
-  strict: false,
-  state: {
-    login: false,
-    user: null
-  }
-})
+// const store = new Vuex.Store({
+//   strict: false,
+//   state: {
+//     login: false,
+//     user: null
+//   }
+// })
 
 new Vue({
   router,
-  store,
+  // store,
   vuetify,
   render: h => h(App)
 }).$mount('#app')

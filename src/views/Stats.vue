@@ -12,19 +12,23 @@ import firebase from 'firebase'
 
 export default {
   data() {
-
+    return {
+      db: null,
+      user: null
+    }
   },
   methods: {
 
   },
-  created() {
-    var db = firebase.firestore()
-
-    db.collection(this.$store.state.user.uid).get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+  async created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.user = user
+        this.db = firebase.firestore();
+        const collection = this.db.collection(this.user.uid).get()
+        console.log(collection)
+      }
     });
-});
   }
 }
 </script>
