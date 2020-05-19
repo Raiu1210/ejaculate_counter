@@ -29,7 +29,7 @@ export default {
   methods: {
     save_evaculate() {
       const result = confirm("射精を記録しますか？")
-      if (result && this.login) {
+      if (result && this.$store.state.login) {
         const now = this.get_current_time()
         console.log(now)
         var db = firebase.firestore()

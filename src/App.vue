@@ -73,22 +73,21 @@ export default {
         'Stack overview'
       ],
       user: null,
-      login: false
     }
   },
   components: {
   },
   methods: {
     doLogout() {
-      console.log("Logout")
       firebase.auth().signOut()
-      this.login = false
+      this.$store.state.login = false
     },
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.user = user
+        this.$store.state.login = true
         
         var db = firebase.firestore()
         db.collection("users").doc(this.user.uid).set({

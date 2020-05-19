@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Signin v-show="!this.login"></Signin>
-    <Top v-show="this.login"></Top>
+    <Signin v-show="!this.$store.state.login"></Signin>
+    <Top v-show="this.$store.state.login"></Top>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.user = user
-        this.login = true
+        this.$state.login = true
       }
     });
   }
