@@ -49,7 +49,7 @@
     </v-navigation-drawer>
 
     <v-content>
-      <router-view v-bind:login="login"/>
+      <router-view/>
     </v-content>
 
     <v-footer dark app>
@@ -72,7 +72,6 @@ export default {
         'Github issue board',
         'Stack overview'
       ],
-      user: null,
     }
   },
   components: {
@@ -86,13 +85,13 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        this.user = user
+        this.$store.state.user = user
         this.$store.state.login = true
         
         var db = firebase.firestore()
-        db.collection("users").doc(this.user.uid).set({
-          uid: this.user.uid,
-          displayName: this.user.displayName
+        db.collection("users").doc(user.uid).set({
+          uid: user.uid,
+          displayName: user.displayName
         })
         .then(function() {
           // console.log("Added")
@@ -100,6 +99,8 @@ export default {
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
+      } else {
+        this.$store.state.login = false
       }
     });
   }

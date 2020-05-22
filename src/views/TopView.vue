@@ -8,9 +8,9 @@
       </div>
 
       <br>
-      <img :src="this.user.photoURL">
-      <h3>displayName : {{this.user.displayName}}</h3>
-      <h3>uid : {{this.user.uid}}</h3>
+      <img :src="this.$store.state.user.photoURL">
+      <h3>displayName : {{this.$store.state.user.displayName}}</h3>
+      <h3>uid : {{this.$store.state.user.uid}}</h3>
     </center>
   </div>  
 </template>
@@ -22,8 +22,7 @@ import firebase from 'firebase'
 export default {
   data() {
     return {
-      user: null,
-      login: false
+      
     }
   },
   methods: {
@@ -34,9 +33,11 @@ export default {
         console.log(now)
         var db = firebase.firestore()
 
-        db.collection(this.uid).doc(now).set({
-          uid: this.user.uid,
-          displayName: this.user.displayName
+        console.log(this.uid)
+
+        db.collection(this.$store.state.user.uid).doc(now).set({
+          uid: this.$store.state.user.uid,
+          displayName: this.$store.state.user.displayName
         })
         .then(function() {
           alert("射精の記録を追加したよ！")
@@ -51,7 +52,7 @@ export default {
     get_current_time() {
       var d = new Date();
       var year  = d.getFullYear();
-      var month = ((d.getMonth() + 1) < 10) ? '0' + d.getMonth() : d.getMonth();
+      var month = ((d.getMonth() + 1) < 10) ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
       var day   = ( d.getDate()   < 10 ) ? '0' + d.getDate()   : d.getDate();
       var hour  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
       var min   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
@@ -64,12 +65,13 @@ export default {
     console.log(this.$parent.user)
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        this.user = user
+        this.$store.state.user = user
+        this.$store.state.login = true
         
         var db = firebase.firestore()
-        db.collection("users").doc(this.user.uid).set({
-          uid: this.user.uid,
-          displayName: this.user.displayName
+        db.collection("users").doc(user.uid).set({
+          uid: user.uid,
+          displayName: user.displayName
         })
         .then(function() {
           // console.log("Added")
@@ -77,6 +79,8 @@ export default {
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
+      } else {
+        this.$store.state.login = false
       }
     });
   }
