@@ -8,8 +8,15 @@
           <div class="body-1 mb-1">{{ejaculated_timstamps.length}}回</div>
         </v-card-text>
       </v-card>
-      <span>{{ejaculated_timstamps}}</span>
-      <Chart></Chart>
+      
+      <v-card class="second-card" width="60%">
+        <v-card-title class="headline">あなたの推計射精量[ml]</v-card-title>
+        <v-divider class="mx-3"></v-divider>
+        <v-card-text>
+          <div class="body-1 mb-1">{{ejaculated_timstamps.length * 3.5}} [ml]</div>
+        </v-card-text>
+      </v-card>
+      <!-- <Chart></Chart> -->
     </center>
   </div>  
 </template>
@@ -18,7 +25,7 @@
 <script>
 import firebase from 'firebase'
 import { Bar } from 'vue-chartjs'
-import Chart from '@/components/Chart.vue';
+// import Chart from '@/components/Chart.vue';
 
 export default {
   extends: Bar,
@@ -54,7 +61,7 @@ export default {
     this.renderChart(this.data, this.options)
   },
   components: {
-    Chart,
+    // Chart,
   },
 }
 </script>
@@ -63,5 +70,9 @@ export default {
 <style scoped>
   .top-card {
     margin: 100px 0px 0px 0px;
+  }
+
+  .second-card {
+    margin: 20px 0px 0px 0px;
   }
 </style>
