@@ -1,22 +1,8 @@
 <template>
   <div>
     <center>
-      <v-card class="top-card" width="60%">
-        <v-card-title class="headline">あなたの累計射精回数</v-card-title>
-        <v-divider class="mx-3"></v-divider>
-        <v-card-text>
-          <div class="body-1 mb-1">{{ejaculated_timstamps.length}}回</div>
-        </v-card-text>
-      </v-card>
-      
-      <v-card class="second-card" width="60%">
-        <v-card-title class="headline">あなたの推計射精量[ml]</v-card-title>
-        <v-divider class="mx-3"></v-divider>
-        <v-card-text>
-          <div class="body-1 mb-1">{{ejaculated_timstamps.length * 3.5}} [ml]</div>
-        </v-card-text>
-      </v-card>
-      <!-- <Chart></Chart> -->
+      <CountCard v-bind="{ count: ejaculated_timstamps.length }"></CountCard>
+      <AmountCard v-bind="{ count: ejaculated_timstamps.length }"></AmountCard>
     </center>
   </div>  
 </template>
@@ -25,7 +11,8 @@
 <script>
 import firebase from 'firebase'
 import { Bar } from 'vue-chartjs'
-// import Chart from '@/components/Chart.vue';
+import CountCard from '@/components/CountCard.vue';
+import AmountCard from '@/components/AmountCard.vue';
 
 export default {
   extends: Bar,
@@ -42,6 +29,7 @@ export default {
       if(user) {
         this.$store.state.user = user
         this.$store.state.login = true
+        console.log(user)
 
         var tmp_ejaculated_timstamps = []  
         firebase.firestore().collection(this.$store.state.user.uid).get().then(function(querySnapshot) {
@@ -54,6 +42,7 @@ export default {
                       
         this.ejaculated_timstamps = tmp_ejaculated_timstamps
         console.log(this.ejaculated_timstamps)
+        console.log(this.ejaculated_timstamps.length)
       }
     });
   },
@@ -61,7 +50,8 @@ export default {
     this.renderChart(this.data, this.options)
   },
   components: {
-    // Chart,
+    CountCard,
+    AmountCard
   },
 }
 </script>
