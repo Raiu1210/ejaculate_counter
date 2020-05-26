@@ -6,7 +6,7 @@
 
       <div class="timely-chart">
         <center>
-          <TimelyChart></TimelyChart>
+          <TimelyChart v-bind="{ejaculated_timstamps:ejaculated_timstamps}"></TimelyChart>
         </center>
       </div>
     </center>
