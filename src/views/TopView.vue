@@ -30,7 +30,6 @@ export default {
       const result = confirm("射精を記録しますか？")
       if (result && this.$store.state.login) {
         const now = this.get_current_time()
-        console.log(now)
         var db = firebase.firestore()
 
         console.log(this.uid)
