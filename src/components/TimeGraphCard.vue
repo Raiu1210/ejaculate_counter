@@ -25,6 +25,6 @@ export default {
 <style scoped>
   .timely-chart {
     margin: 20px 0px 0px 0px;
-    width: 50%;
+    width: 90%;
   }
 </style>
