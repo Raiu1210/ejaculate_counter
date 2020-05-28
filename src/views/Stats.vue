@@ -3,13 +3,7 @@
     <center>
       <CountCard v-bind="{ count: ejaculated_timstamps.length }"></CountCard>
       <AmountCard v-bind="{ count: ejaculated_timstamps.length }"></AmountCard>
-
-      <div class="timely-chart">
-        <center>
-          <TimelyChart></TimelyChart>
-          <p>ejaculated_timstamps</p>
-        </center>
-      </div>
+      <TimeGraphCard></TimeGraphCard>
     </center>
   </div>  
 </template>
@@ -19,7 +13,7 @@
 import firebase from 'firebase'
 import CountCard from '@/components/CountCard.vue'
 import AmountCard from '@/components/AmountCard.vue'
-import TimelyChart from '@/components/TimelyChart.vue'
+import TimeGraphCard from '@/components/TimeGraphCard.vue'
 
 export default {
   data() {
@@ -44,8 +38,6 @@ export default {
           });
 
           self.ejaculated_timstamps = tmp_ejaculated_timstamps
-          // console.log(self.ejaculated_timstamps)
-          console.log("AAA")
         });
       }
     });
@@ -56,7 +48,7 @@ export default {
   components: {
     CountCard,
     AmountCard,
-    TimelyChart
+    TimeGraphCard,
   },
 }
 </script>
@@ -69,10 +61,5 @@ export default {
 
   .second-card {
     margin: 20px 0px 0px 0px;
-  }
-
-  .timely-chart {
-    margin: 20px 0px 0px 0px;
-    width: 50%;
   }
 </style>
