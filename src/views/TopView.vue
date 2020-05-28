@@ -32,15 +32,12 @@ export default {
         const now = this.get_current_time()
         var db = firebase.firestore()
 
-        console.log(this.uid)
-
         db.collection(this.$store.state.user.uid).doc(now).set({
           uid: this.$store.state.user.uid,
           displayName: this.$store.state.user.displayName
         })
         .then(function() {
           alert("射精の記録を追加したよ！")
-          console.log("Added")
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
@@ -61,7 +58,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$parent.user)
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.$store.state.user = user

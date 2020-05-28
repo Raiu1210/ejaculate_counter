@@ -6,7 +6,7 @@
 
       <div class="timely-chart">
         <center>
-          <TimelyChart v-bind="{ejaculated_timstamps:ejaculated_timstamps}"></TimelyChart>
+          <TimelyChart></TimelyChart>
         </center>
       </div>
     </center>
@@ -15,7 +15,7 @@
 
 
 <script>
-import firebase from 'firebase'
+// import firebase from 'firebase'
 import CountCard from '@/components/CountCard.vue'
 import AmountCard from '@/components/AmountCard.vue'
 import TimelyChart from '@/components/TimelyChart.vue'
@@ -30,25 +30,12 @@ export default {
 
   },
   async created() {
-    firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        this.$store.state.user = user
-        this.$store.state.login = true
-
-        var tmp_ejaculated_timstamps = []  
-        firebase.firestore().collection(this.$store.state.user.uid).get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            tmp_ejaculated_timstamps.push(doc.id)
-          });
-        });
-                      
-        this.ejaculated_timstamps = tmp_ejaculated_timstamps
-      }
-    });
+    // var self = this
+    // var tmp_ejaculated_timstamps = [] 
+    
   },
   mounted () {
-    this.renderChart(this.data, this.options)
+    
   },
   components: {
     CountCard,

@@ -1,13 +1,13 @@
 <script>
-// import Vue from 'vue'
+import firebase from 'firebase'
 import { Doughnut, mixins } from 'vue-chartjs'
 
 export default {
   extends: Doughnut,
   mixins: [mixins.reactiveProp],
-  props: ["ejaculated_timstamps"],
   data() {
     return {
+      ejaculated_timstamps: [],
       datas: {
         labels: ['0~2', '2~4', '4~6', '6~8', '8~10', '10~12', '12~14', '14~16', '16~18', '18~20', '20~22', '20~24'],
         datasets: [
@@ -22,21 +22,33 @@ export default {
       }
     }
   },
-  created() {
-    this.datas.datasets[0]["data"] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  async created() {
+    var self = this
+    // get auth info
+    await firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.$store.state.user = user
+        this.$store.state.login = true
+      }
+    })
+    // get ejaculate timestamps
+    await firebase.firestore().collection(this.$store.state.user.uid).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        self.ejaculated_timstamps.push(doc.id)
+      });
+    });
+
+    // generate timestamp distribution
+    var time_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     this.ejaculated_timstamps.forEach(element => {
       const hour = element.slice(11, 13)
       const index = Math.floor(hour/2)
-      this.datas.datasets[0]["data"][index] += 1
+      time_data[index] += 1
     });
 
-    console.log("Finished data load")
-    // this.datas.datasets[0]["data"]
-  },
-  mounted() {
-    console.log(this.datas)
+    this.datas.datasets[0]["data"] = time_data
     this.renderChart(this.datas, this.options)
-  }
+  },
 }
 
 // function hello() {
