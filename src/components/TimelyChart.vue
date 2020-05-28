@@ -20,7 +20,8 @@ export default {
         ]
       },
       options: {
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
