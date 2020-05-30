@@ -15,7 +15,8 @@ export default {
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             backgroundColor: ['#000080', '#0000cd', '#0000ff', '#00bfff', 
                               '#f0e68c', '#ffff00', '#7fff00', '#ffa500', 
-                              '#d2691e', '#800000', '#8b008b', '#4b0082']
+                              '#d2691e', '#800000', '#8b008b', '#4b0082'],
+            borderColor: 'transparent'
           }
         ]
       },

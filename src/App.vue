@@ -80,6 +80,7 @@ export default {
     doLogout() {
       firebase.auth().signOut()
       this.$store.state.login = false
+      this.$router.push('/')
     },
   },
   created() {
