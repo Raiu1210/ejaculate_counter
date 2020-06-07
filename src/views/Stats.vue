@@ -38,7 +38,7 @@ export default {
           });
 
           self.ejaculated_timstamps = tmp_ejaculated_timstamps
-        });
+        })
       }
     });
   },

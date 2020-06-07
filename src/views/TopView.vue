@@ -12,17 +12,15 @@
         </v-btn>
       </div>
 
-      <div class="share_button">
-        <ShareNetwork
-            network="twitter"
-            url="https://ejaculate-counter.firebaseapp.com/#/"
-            title="Say hi to Vite! A brand new, extremely fast development setup for Vue."
-            hashtags="vuejs,vite,javascript"
-          >
-          <!-- <i class="fab fah fa-lg fa-twitter"></i> -->
-          <span class="guide_label">Twitterでシェア</span>
-        </ShareNetwork>
-      </div>
+      <ShareNetwork
+          class="share_button"
+          network="twitter"
+          url="https://ejaculate-counter.firebaseapp.com/#/"
+          v-bind:title="tweet_msg"
+          hashtags="わたしの射精記録,射精記録,射精,ザーメン"
+        >
+        <span class="guide_label">Twitterでシェア</span>
+      </ShareNetwork>
     </center>
   </div>  
 </template>
@@ -34,7 +32,8 @@ import firebase from 'firebase'
 export default {
   data() {
     return {
-      
+      tweet_msg: 'aaa',
+      ejaculated_timstamps: []
     }
   },
   methods: {
@@ -69,8 +68,10 @@ export default {
       return year + '-' + month + '-' + day + '-' + hour + '-' + min + '-' + sec
     }
   },
-  created() {
-    firebase.auth().onAuthStateChanged(user => {
+  async created() {
+    var self = this
+    
+    await firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.$store.state.user = user
         this.$store.state.login = true
@@ -80,16 +81,22 @@ export default {
           uid: user.uid,
           displayName: user.displayName
         })
-        .then(function() {
-          // console.log("Added")
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
       } else {
         this.$store.state.login = false
       }
+    })
+
+    // get ejaculate timestamps
+    await firebase.firestore().collection(this.$store.state.user.uid).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        self.ejaculated_timstamps.push(doc.id)
+      });
     });
+
+    this.tweet_msg = "私の射精記録\n\n" + 
+                     "【射精回数】\n\t" + this.ejaculated_timstamps.length + "回\n\n" +
+                     "【推計射精量】\n\t" + this.ejaculated_timstamps.length*3.5 + " [ml]\n\n"
+                    
   }
 }
 </script>
@@ -119,7 +126,8 @@ export default {
     text-decoration: none;
     color: white;
     border-radius: 5px;
-    padding: 14px 80px;
+    padding: 20px 10px;
+    
   }
   .share_button:active {
     top: 2px;
@@ -131,6 +139,8 @@ export default {
 
   .guide_label {
     color: white;
-    font-size: 20pt;
+    font-size: 14pt;
   }
 </style>
+
+
