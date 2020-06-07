@@ -4,8 +4,10 @@ import Vuex from 'vuex'
 import router from './router'
 import firebase from 'firebase'
 import vuetify from './plugins/vuetify';
+import VueSocialSharing from 'vue-social-sharing'
 
 Vue.use(Vuex)
+Vue.use(VueSocialSharing);
 Vue.config.productionTip = false
 
 const firebaseConfig = {

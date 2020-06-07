@@ -11,6 +11,18 @@
           <span>射精した！</span>  
         </v-btn>
       </div>
+
+      <div class="share_button">
+        <ShareNetwork
+            network="twitter"
+            url="https://ejaculate-counter.firebaseapp.com/#/"
+            title="Say hi to Vite! A brand new, extremely fast development setup for Vue."
+            hashtags="vuejs,vite,javascript"
+          >
+          <!-- <i class="fab fah fa-lg fa-twitter"></i> -->
+          <span class="guide_label">Twitterでシェア</span>
+        </ShareNetwork>
+      </div>
     </center>
   </div>  
 </template>
@@ -90,5 +102,35 @@ export default {
 
   .ejaculate_button {
     margin: 30px;
+  }
+
+  .share_button {
+    height: 70px;
+    width: 50%;
+    background-color: #008DDE;
+    box-shadow: 0 4px 0 #0078BD;
+    
+    /* display: inline; */
+    position: relative;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    padding: 14px 80px;
+  }
+  .share_button:active {
+    top: 2px;
+    box-shadow: 0 2px 0 #0078BD;
+  }
+  .share_button:hover {
+    background-color: #1397D8;
+  }
+
+  .guide_label {
+    color: white;
+    font-size: 20pt;
   }
 </style>
